@@ -379,14 +379,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdq-G8-P21">
-                                <rect key="frame" x="416" y="203" width="106" height="13"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Not Yet Implemented" id="h0x-ik-Fdr">
-                                    <font key="font" metaFont="system" size="10"/>
-                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bL8-wW-6ym">
                                 <rect key="frame" x="19" y="13" width="72" height="32"/>
                                 <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2zs-Nd-1wW">
@@ -400,8 +392,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="QkB-WR-3qb" secondAttribute="trailing" constant="22" id="1Rn-8z-iTF"/>
-                            <constraint firstItem="xdq-G8-P21" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="115" id="Ge2-Ss-dUe"/>
-                            <constraint firstAttribute="trailing" secondItem="xdq-G8-P21" secondAttribute="trailing" constant="22" id="GiV-fs-15W"/>
                             <constraint firstAttribute="bottom" secondItem="QkB-WR-3qb" secondAttribute="bottom" constant="63" id="exx-ra-2jA"/>
                         </constraints>
                     </view>

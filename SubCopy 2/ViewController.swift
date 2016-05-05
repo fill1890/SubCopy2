@@ -118,7 +118,22 @@ class ViewController: NSViewController {
             copyButton.enabled = false
         }
     }
-
+    
+    func updateCheckBox(sender sender: AnyObject?) {
+        guard sender != nil else {
+            print("Warning: Sender not given")
+            return
+        }
+        
+        let button = sender! as! NSButton
+        
+        guard button.identifier !=  nil else {
+            print("Checkbox could not be identified")
+            return
+        }
+        
+        checkBoxStates[button.identifier!] = button.state
+    }
 
     @IBAction func openSourceDocument(sender: AnyObject?) {
         let openPanel = NSOpenPanel()
@@ -166,7 +181,8 @@ class ViewController: NSViewController {
     
     @IBAction func copyFiles(sender: AnyObject?) {
         for file in fileManager!.files {
-            if file.isDirectory == false {
+            
+            if file.isDirectory == false && checkBoxStates[file.filetype] == 1 {
                 let src = file.url
                 let rawDestPath = destField.stringValue
                 let destPath = rawDestPath.characters.last == "/" ? rawDestPath : rawDestPath + "/"
@@ -233,9 +249,17 @@ extension ViewController : NSTableViewDelegate {
                 cell.textField?.stringValue = text
                 //cell.imageView?.image = image ?? nil
                 
-                checkBoxStates[item["name"]!] = checkState
+                //checkBoxStates.setValue(checkState, forKey: item["name"]!)
                 
-                cell.checkBox!.bind("value", toObject: (checkBoxStates as NSDictionary), withKeyPath: item["name"]!, options: nil)
+                //cell.checkBox!.bind("value", toObject: checkBoxStates, withKeyPath: item["name"]!, options: nil)
+                
+                //cell.checkBox!.alternateTitle = item["name"]!
+                cell.checkBox!.identifier = item["name"]!
+                cell.checkBox!.target = self
+                cell.checkBox!.action = #selector(updateCheckBox)
+                cell.checkBox!.state = checkState
+                
+                checkBoxStates[item["name"]!] = checkState
                 
                 return cell
             }
@@ -260,3 +284,14 @@ class NSTableCellViewWithCheckBox: NSTableCellView {
     @IBOutlet var checkBox: NSButton?
 }
 
+/*class checkBindings: NSObject {
+    var checks: [String: AnyObject] = [:]
+    
+    override func valueForKey(key: String) -> AnyObject? {
+        return self.checks[key]
+    }
+    
+    func setValue(value: AnyObject, forKey key: String) {
+        self.checks[key] = value
+    }
+}*/
