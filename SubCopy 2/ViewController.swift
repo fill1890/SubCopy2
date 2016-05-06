@@ -23,6 +23,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var extSpinner: NSProgressIndicator!
     @IBOutlet weak var copyButton: NSButton!
+    @IBOutlet weak var copyProgress: NSProgressIndicator!
     
     
     override func viewDidLoad() {
@@ -180,19 +181,39 @@ class ViewController: NSViewController {
     }
     
     @IBAction func copyFiles(sender: AnyObject?) {
-        for file in fileManager!.files {
-            
-            if file.isDirectory == false && checkBoxStates[file.filetype] == 1 {
-                let src = file.url
-                let rawDestPath = destField.stringValue
-                let destPath = rawDestPath.characters.last == "/" ? rawDestPath : rawDestPath + "/"
-                let dest = NSURL.fileURLWithPath(destPath + file.name, isDirectory: false)
-                do {
-                    try MasterFileManager.copyItemAtURL(src, toURL: dest)
-                } catch {
-                    print("Unable to copy file: \(file.url)")
+        copyProgress.doubleValue = 0.0
+        
+        dispatch_async(GlobalUtilityQueue) {
+        
+            let files = self.fileManager!.files.count
+            for i in 0..<files {
+                let file = self.fileManager!.files[i]
+                
+                dispatch_async(GlobalMainQueue) {
+                
+                    self.copyProgress.doubleValue = (Double(i) + 1) / Double(files) * 100
+                    
+                }
+                
+                if file.isDirectory == false && self.checkBoxStates[file.filetype] == 1 {
+                    let src = file.url
+                    let rawDestPath = self.destField.stringValue
+                    let destPath = rawDestPath.characters.last == "/" ? rawDestPath : rawDestPath + "/"
+                    let dest = NSURL.fileURLWithPath(destPath + file.name, isDirectory: false)
+                    do {
+                        try self.MasterFileManager.copyItemAtURL(src, toURL: dest)
+                    } catch {
+                        print("Unable to copy file: \(file.url)")
+                    }
                 }
             }
+            
+            dispatch_async(GlobalMainQueue) {
+            
+                self.copyProgress.doubleValue = 100.0
+                
+            }
+            
         }
     }
 }
