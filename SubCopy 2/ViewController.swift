@@ -17,6 +17,7 @@ class ViewController: NSViewController {
     var sourceValid: Bool = false
     var destValid: Bool = false
     var MasterFileManager : NSFileManager = NSFileManager()
+    var hasFocus: Bool = true
     
     @IBOutlet weak var sourceField: NSTextField!
     @IBOutlet weak var destField: NSTextField!
@@ -24,12 +25,16 @@ class ViewController: NSViewController {
     @IBOutlet weak var extSpinner: NSProgressIndicator!
     @IBOutlet weak var copyButton: NSButton!
     @IBOutlet weak var copyProgress: NSProgressIndicator!
-    
+    @IBOutlet weak var copyOverlay: NSProgressIndicator!
+    @IBOutlet weak var statusButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.copyOverlay.doubleValue = 100.0
+        self.copyOverlay.alphaValue = 0
         
         tableView.setDelegate(self)
         tableView.setDataSource(self)
@@ -53,7 +58,19 @@ class ViewController: NSViewController {
             self.destValidateTimer!.reset()
             
         })
+
+    }
+    
+    override func viewWillAppear() {
+        NSNotificationCenter.defaultCenter().addObserverForName(NSWindowDidResignMainNotification, object: self.view.window!, queue: NSOperationQueue.mainQueue()) {
+            (notification) in
+            self.hasFocus = false
+        }
         
+        NSNotificationCenter.defaultCenter().addObserverForName(NSWindowDidBecomeMainNotification, object: self.view.window!, queue: NSOperationQueue.mainQueue()) {
+            (notification) in
+            self.hasFocus = true
+        }
     }
 
     override var representedObject: AnyObject? {
@@ -182,8 +199,11 @@ class ViewController: NSViewController {
     
     @IBAction func copyFiles(sender: AnyObject?) {
         copyProgress.doubleValue = 0.0
+        copyOverlay.alphaValue = 0.0
         
         dispatch_async(GlobalUtilityQueue) {
+            var copyCount = 0
+            var failedCopyCount = 0
         
             let files = self.fileManager!.files.count
             for i in 0..<files {
@@ -202,8 +222,14 @@ class ViewController: NSViewController {
                     let dest = NSURL.fileURLWithPath(destPath + file.name, isDirectory: false)
                     do {
                         try self.MasterFileManager.copyItemAtURL(src, toURL: dest)
+                        dispatch_async(GlobalMainQueue) {
+                            copyCount += 1
+                        }
                     } catch {
                         print("Unable to copy file: \(file.url)")
+                        dispatch_async(GlobalMainQueue) {
+                            failedCopyCount += 1
+                        }
                     }
                 }
             }
@@ -211,6 +237,19 @@ class ViewController: NSViewController {
             dispatch_async(GlobalMainQueue) {
             
                 self.copyProgress.doubleValue = 100.0
+                self.copyOverlay.alphaValue = 1.0
+                
+                self.statusButton.title = "\(copyCount) copied, \(failedCopyCount) failures"
+                self.statusButton.hidden = false
+                
+                if !self.hasFocus {
+                    let notification = NSUserNotification()
+                    notification.title = "Copy Complete"
+                    notification.informativeText = "\(copyCount) files copied successfully, \(failedCopyCount) failed"
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    
+                    NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(notification)
+                }
                 
             }
             

@@ -213,7 +213,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="SubCopy 2" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="SubCopy 2" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="documentWindow" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="538" y="369" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -389,9 +389,37 @@
                                     <action selector="copyFiles:" target="XfG-lQ-9wD" id="ycR-4h-1Gl"/>
                                 </connections>
                             </button>
-                            <progressIndicator wantsLayer="YES" fixedFrame="YES" minValue="-4" maxValue="100" doubleValue="-4" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="HfC-mg-INg">
-                                <rect key="frame" x="93" y="20" width="429" height="20"/>
+                            <progressIndicator wantsLayer="YES" maxValue="100" doubleValue="27" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="HfC-mg-INg">
+                                <rect key="frame" x="88" y="20" width="434" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="nLL-63-sic"/>
+                                </constraints>
                             </progressIndicator>
+                            <progressIndicator wantsLayer="YES" alphaValue="0.0" maxValue="100" doubleValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="ZM7-zb-fCF">
+                                <rect key="frame" x="88" y="20" width="434" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="hBi-8M-7xw"/>
+                                </constraints>
+                                <contentFilters>
+                                    <ciFilter name="CIHueAdjust">
+                                        <configuration>
+                                            <real key="inputAngle" value="5"/>
+                                            <null key="inputImage"/>
+                                        </configuration>
+                                    </ciFilter>
+                                </contentFilters>
+                            </progressIndicator>
+                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fnK-Hv-vnk" userLabel="Status">
+                                <rect key="frame" x="353" y="4" width="169" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="KEL-ng-oVb"/>
+                                    <constraint firstAttribute="width" constant="169" id="Tq7-y0-J9e"/>
+                                </constraints>
+                                <buttonCell key="cell" type="inline" title="0000 Copied, 0000 Failures" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="IuL-Wp-U2x">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="QkB-WR-3qb" secondAttribute="trailing" constant="22" id="1Rn-8z-iTF"/>
@@ -400,17 +428,19 @@
                     </view>
                     <connections>
                         <outlet property="copyButton" destination="bL8-wW-6ym" id="t5m-Pq-mbf"/>
+                        <outlet property="copyOverlay" destination="ZM7-zb-fCF" id="Geh-Px-lBT"/>
                         <outlet property="copyProgress" destination="HfC-mg-INg" id="YJ0-Oy-bbl"/>
                         <outlet property="destField" destination="DRO-lS-gOB" id="Klp-hF-4mp"/>
                         <outlet property="extSpinner" destination="QkB-WR-3qb" id="uFJ-eB-nUY"/>
                         <outlet property="sourceField" destination="R4d-Ik-jRq" id="VnV-ki-Gga"/>
+                        <outlet property="statusButton" destination="fnK-Hv-vnk" id="CvA-7y-qdL"/>
                         <outlet property="tableView" destination="zds-vK-6HI" id="4sK-W3-Cwh"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="LzV-Zj-f8O"/>
             </objects>
-            <point key="canvasLocation" x="75" y="735.5"/>
+            <point key="canvasLocation" x="74" y="798.5"/>
         </scene>
     </scenes>
 </document>
