@@ -281,9 +281,6 @@
                                     <action selector="openDestDocument:" target="XfG-lQ-9wD" id="3qv-fB-ISL"/>
                                 </connections>
                             </button>
-                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QkB-WR-3qb">
-                                <rect key="frame" x="504" y="63" width="16" height="16"/>
-                            </progressIndicator>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bL8-wW-6ym">
                                 <rect key="frame" x="14" y="13" width="72" height="32"/>
                                 <constraints>
@@ -452,6 +449,9 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QkB-WR-3qb">
+                                <rect key="frame" x="504" y="63" width="16" height="16"/>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="a5q-fG-GRb" firstAttribute="leading" secondItem="R4d-Ik-jRq" secondAttribute="trailing" constant="8" id="5Aj-xd-bG5"/>
@@ -545,8 +545,8 @@
                                                                                 <rect key="frame" x="1" y="1" width="238" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCi-u7-wDO">
-                                                                                        <rect key="frame" x="0.0" y="2" width="238" height="17"/>
+                                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CCi-u7-wDO">
+                                                                                        <rect key="frame" x="0.0" y="2" width="236" height="17"/>
                                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Table View Cell" id="cr3-MK-MOn">
                                                                                             <font key="font" metaFont="system"/>
                                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>

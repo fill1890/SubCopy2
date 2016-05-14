@@ -87,12 +87,23 @@ class ViewController: NSViewController {
     override var representedObject: AnyObject? {
         didSet {
         
-            fileManager = FileManager(folder: self.representedObject! as! NSURL)
-            tableView.reloadData()
-            
-            extSpinner.stopAnimation(nil)
-            
-            setupCopy()
+            dispatch_async(GlobalUtilityQueue) {
+                
+                self.fileManager = FileManager(folder: self.representedObject! as! NSURL)
+                
+                dispatch_async(GlobalMainQueue) {
+                    
+                    self.tableView.reloadData()
+                    
+                    self.extSpinner.stopAnimation(nil)
+                    
+                    self.sourceValid = false
+                    
+                    self.setupCopy()
+                    
+                }
+                
+            }
             
         }
     }
@@ -111,7 +122,6 @@ class ViewController: NSViewController {
         }
         
         sourceField.textColor = NSColor(red: 0, green: 0, blue: 0, alpha: 1)
-        sourceValid = true
         
         extSpinner.startAnimation(nil)
         
