@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		498D92731CDC250A00828563 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498D92721CDC250900828563 /* Utils.swift */; };
 		49B90CC51CD76BCA00B05865 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90CC41CD76BCA00B05865 /* FileManager.swift */; };
+		49BB36031CE2FCA7004A50E4 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB36021CE2FCA7004A50E4 /* PopoverViewController.swift */; };
 		49F32FEA1CD761FA00786645 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F32FE91CD761FA00786645 /* AppDelegate.swift */; };
 		49F32FEC1CD761FA00786645 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F32FEB1CD761FA00786645 /* ViewController.swift */; };
 		49F32FEE1CD761FA00786645 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49F32FED1CD761FA00786645 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		498D92721CDC250900828563 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		49B90CC41CD76BCA00B05865 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		49BB36021CE2FCA7004A50E4 /* PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
 		49F32FE61CD761FA00786645 /* SubCopy 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SubCopy 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F32FE91CD761FA00786645 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49F32FEB1CD761FA00786645 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				49B90CC41CD76BCA00B05865 /* FileManager.swift */,
 				49F32FED1CD761FA00786645 /* Assets.xcassets */,
 				49F32FEF1CD761FA00786645 /* Main.storyboard */,
+				49BB36021CE2FCA7004A50E4 /* PopoverViewController.swift */,
 				49F32FF21CD761FA00786645 /* Info.plist */,
 			);
 			path = "SubCopy 2";
@@ -260,6 +263,7 @@
 			files = (
 				49B90CC51CD76BCA00B05865 /* FileManager.swift in Sources */,
 				49F32FEC1CD761FA00786645 /* ViewController.swift in Sources */,
+				49BB36031CE2FCA7004A50E4 /* PopoverViewController.swift in Sources */,
 				49F32FEA1CD761FA00786645 /* AppDelegate.swift in Sources */,
 				498D92731CDC250A00828563 /* Utils.swift in Sources */,
 			);
