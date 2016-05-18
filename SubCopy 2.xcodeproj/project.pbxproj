@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491F058D1CE9BCE7002E23B6 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F058C1CE9BCE7002E23B6 /* ContainerViewController.swift */; };
+		491F058F1CE9CFD2002E23B6 /* StoryboardSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F058E1CE9CFD2002E23B6 /* StoryboardSegues.swift */; };
+		491F05911CE9D080002E23B6 /* CopyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F05901CE9D080002E23B6 /* CopyingViewController.swift */; };
+		4969B3651CE9E145001346A3 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4969B3641CE9E145001346A3 /* ReportViewController.swift */; };
 		498D92731CDC250A00828563 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498D92721CDC250900828563 /* Utils.swift */; };
 		49B90CC51CD76BCA00B05865 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90CC41CD76BCA00B05865 /* FileManager.swift */; };
-		49BB36031CE2FCA7004A50E4 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB36021CE2FCA7004A50E4 /* PopoverViewController.swift */; };
 		49F32FEA1CD761FA00786645 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F32FE91CD761FA00786645 /* AppDelegate.swift */; };
-		49F32FEC1CD761FA00786645 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F32FEB1CD761FA00786645 /* ViewController.swift */; };
+		49F32FEC1CD761FA00786645 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F32FEB1CD761FA00786645 /* InitialViewController.swift */; };
 		49F32FEE1CD761FA00786645 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49F32FED1CD761FA00786645 /* Assets.xcassets */; };
 		49F32FF11CD761FA00786645 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49F32FEF1CD761FA00786645 /* Main.storyboard */; };
 		49F32FFC1CD761FA00786645 /* SubCopy_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F32FFB1CD761FA00786645 /* SubCopy_2Tests.swift */; };
@@ -36,12 +39,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		491F058C1CE9BCE7002E23B6 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		491F058E1CE9CFD2002E23B6 /* StoryboardSegues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardSegues.swift; sourceTree = "<group>"; };
+		491F05901CE9D080002E23B6 /* CopyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyingViewController.swift; sourceTree = "<group>"; };
+		4969B3641CE9E145001346A3 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		498D92721CDC250900828563 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		49B90CC41CD76BCA00B05865 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		49BB36021CE2FCA7004A50E4 /* PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
 		49F32FE61CD761FA00786645 /* SubCopy 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SubCopy 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F32FE91CD761FA00786645 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		49F32FEB1CD761FA00786645 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		49F32FEB1CD761FA00786645 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		49F32FED1CD761FA00786645 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49F32FF01CD761FA00786645 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		49F32FF21CD761FA00786645 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,13 +107,16 @@
 		49F32FE81CD761FA00786645 /* SubCopy 2 */ = {
 			isa = PBXGroup;
 			children = (
-				49F32FE91CD761FA00786645 /* AppDelegate.swift */,
-				49F32FEB1CD761FA00786645 /* ViewController.swift */,
+				491F058C1CE9BCE7002E23B6 /* ContainerViewController.swift */,
+				49F32FEB1CD761FA00786645 /* InitialViewController.swift */,
+				491F05901CE9D080002E23B6 /* CopyingViewController.swift */,
+				4969B3641CE9E145001346A3 /* ReportViewController.swift */,
+				491F058E1CE9CFD2002E23B6 /* StoryboardSegues.swift */,
 				498D92721CDC250900828563 /* Utils.swift */,
 				49B90CC41CD76BCA00B05865 /* FileManager.swift */,
 				49F32FED1CD761FA00786645 /* Assets.xcassets */,
 				49F32FEF1CD761FA00786645 /* Main.storyboard */,
-				49BB36021CE2FCA7004A50E4 /* PopoverViewController.swift */,
+				49F32FE91CD761FA00786645 /* AppDelegate.swift */,
 				49F32FF21CD761FA00786645 /* Info.plist */,
 			);
 			path = "SubCopy 2";
@@ -261,10 +270,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491F058F1CE9CFD2002E23B6 /* StoryboardSegues.swift in Sources */,
+				491F058D1CE9BCE7002E23B6 /* ContainerViewController.swift in Sources */,
 				49B90CC51CD76BCA00B05865 /* FileManager.swift in Sources */,
-				49F32FEC1CD761FA00786645 /* ViewController.swift in Sources */,
-				49BB36031CE2FCA7004A50E4 /* PopoverViewController.swift in Sources */,
+				49F32FEC1CD761FA00786645 /* InitialViewController.swift in Sources */,
+				4969B3651CE9E145001346A3 /* ReportViewController.swift in Sources */,
 				49F32FEA1CD761FA00786645 /* AppDelegate.swift in Sources */,
+				491F05911CE9D080002E23B6 /* CopyingViewController.swift in Sources */,
 				498D92731CDC250A00828563 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

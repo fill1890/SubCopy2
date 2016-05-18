@@ -8,47 +8,28 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class InitialViewController: NSViewController {
     
     var sourceValidateTimer: TimerWithReset? = nil
     var destValidateTimer: TimerWithReset? = nil
-    var fileManager: FileManager? = nil
     var checkBoxStates: Dictionary = [String: Int]()
     var sourceValid: Bool = false
     var destValid: Bool = false
     var MasterFileManager : NSFileManager = NSFileManager()
     var hasFocus: Bool = true
-    var reportViewController: PopoverViewController? = nil
-    var reportPanel: NSWindow? = nil
-    var reportPopover: NSPopover? = nil
+    var fileManager: FileManager?
     
     @IBOutlet weak var sourceField: NSTextField!
     @IBOutlet weak var destField: NSTextField!
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var extSpinner: NSProgressIndicator!
     @IBOutlet weak var copyButton: NSButton!
-    @IBOutlet weak var copyProgress: NSProgressIndicator!
-    @IBOutlet weak var copyOverlay: NSProgressIndicator!
-    @IBOutlet weak var statusButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.copyOverlay.doubleValue = 100.0
-        self.copyOverlay.alphaValue = 0
-        
         self.tableView.setDelegate(self)
         self.tableView.setDataSource(self)
-        
-        self.reportViewController = self.storyboard?.instantiateControllerWithIdentifier("PopoverViewController") as? PopoverViewController
-        self.addChildViewController(self.reportViewController!)
-        
-        let reportFrame: NSRect = self.reportViewController!.view.bounds
-        let reportStyle: Int = NSTitledWindowMask + NSClosableWindowMask
-        let reportRect: NSRect = NSWindow.contentRectForFrameRect(reportFrame, styleMask: reportStyle)
-        self.reportPanel = NSWindow(contentRect: reportRect, styleMask: reportStyle, backing: NSBackingStoreType.Buffered, defer: true)
-        self.reportPanel?.contentViewController = self.reportViewController
-        self.reportPanel?.releasedWhenClosed = false
         
         NSNotificationCenter.defaultCenter().addObserverForName(NSControlTextDidChangeNotification, object: sourceField, queue: NSOperationQueue.mainQueue()) {
             (notification) in
@@ -97,7 +78,7 @@ class ViewController: NSViewController {
                     
                     self.extSpinner.stopAnimation(nil)
                     
-                    self.sourceValid = false
+                    self.sourceValid = true
                     
                     self.setupCopy()
                     
@@ -106,6 +87,20 @@ class ViewController: NSViewController {
             }
             
         }
+    }
+    
+    override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
+        guard let segue = segue as? SlideViewLeftSegue else {
+            return
+        }
+        
+        guard let destination = segue.destinationController as? CopyingViewController else {
+            return
+        }
+        
+        destination.passedData = (self.destField.stringValue, self.checkBoxStates)
+        destination.fileManager = self.fileManager
+        
     }
     
     func validateSource() {
@@ -125,9 +120,7 @@ class ViewController: NSViewController {
         
         extSpinner.startAnimation(nil)
         
-        _ = TimerWithReset(time: 1500) {
-            self.representedObject = NSURL.fileURLWithPath(newVal, isDirectory: true)
-        }
+        self.representedObject = NSURL.fileURLWithPath(newVal, isDirectory: true)
         
     }
     
@@ -174,24 +167,6 @@ class ViewController: NSViewController {
         
         checkBoxStates[button.identifier!] = button.state
     }
-    
-    func createReport(callback: (Void -> Void)?) {
-        self.reportViewController?.setupReport(fileManager!)
-        
-        if self.reportPopover == nil {
-            self.reportPopover = NSPopover()
-            self.reportPopover!.contentViewController = self.reportViewController
-            //self.reportPopover!.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
-            self.reportPopover!.animates = true
-            self.reportPopover!.behavior = NSPopoverBehavior.Transient
-            self.reportPopover!.delegate = self
-        }
-        
-        if callback != nil {
-            callback!()
-        }
-        
-    }
 
     @IBAction func openSourceDocument(sender: AnyObject?) {
         let openPanel = NSOpenPanel()
@@ -232,71 +207,23 @@ class ViewController: NSViewController {
             
         }
     }
-    
-    @IBAction func copyFiles(sender: AnyObject?) {
-        copyProgress.doubleValue = 0.0
-        copyOverlay.alphaValue = 0.0
-        
-        fileManager?.copyTo(self.destField.stringValue, filetypes: checkBoxStates, progressIndicator: copyProgress) {
-            (successFiles, failedFiles) in
-            
-            self.fileManager?.failedFiles = failedFiles
-            self.fileManager?.successFiles = successFiles
-            
-            self.copyOverlay.alphaValue = 1.0
-            
-            self.statusButton.title = "\(successFiles.count) copied, \(failedFiles.count) failures"
-            self.statusButton.hidden = false
-            
-            if !self.hasFocus {
-                let notification = NSUserNotification()
-                notification.title = "Copy Complete"
-                notification.informativeText = "\(successFiles.count) files copied successfully, \(failedFiles.count) failed"
-                notification.soundName = NSUserNotificationDefaultSoundName
-                
-                NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(notification)
-            }
-        }
-    }
-    
-    @IBAction func showReport(sender: AnyObject?) {
-        if self.reportPanel!.visible {
-            self.reportPanel!.makeKeyAndOrderFront(self)
-            return
-        }
-        
-        guard sender != nil else {
-            return;
-        }
-        
-        self.createReport() {
-        
-            let prefEdge: NSRectEdge = NSRectEdge.MaxX
-        
-            self.reportPopover!.showRelativeToRect(self.statusButton.bounds, ofView: sender! as! NSView, preferredEdge: prefEdge)
-            
-        }
-        
-    }
 }
 
-extension ViewController: NSTableViewDataSource {
+extension InitialViewController: NSTableViewDataSource {
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
-        return fileManager?.filetypes.count ?? 0
+        return self.fileManager?.filetypes.count ?? 0
     }
 }
 
-extension ViewController : NSTableViewDelegate {
+extension InitialViewController: NSTableViewDelegate {
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         let checkState: Int = NSOnState
         var text: String = ""
         var cellIdentifier: String = ""
         
-        guard let item = fileManager?.filetypes[row] else {
-            return nil
-        }
-        
+        let item = self.fileManager!.filetypes[row]
+    
         if tableColumn == tableView.tableColumns[0] {
             text = ""
             
@@ -326,36 +253,6 @@ extension ViewController : NSTableViewDelegate {
         }
         
         return nil
-    }
-}
-
-extension ViewController: NSPopoverDelegate {
-    func detachableWindowForPopover(popover: NSPopover) -> NSWindow? {
-        return self.reportPanel
-    }
-    
-    /*func popoverShouldClose(popover: NSPopover) -> Bool {
-        <#code#>
-    }
-    
-    func popoverWillShow(notification: NSNotification) {
-        <#code#>
-    }
-    
-    func popoverDidShow(notification: NSNotification) {
-        <#code#>
-    }
-    
-    func popoverWillClose(notification: NSNotification) {
-        <#code#>
-    }*/
-    
-    func popoverDidClose(notification: NSNotification) {
-        self.reportPopover = nil
-    }
-    
-    func popoverShouldDetach(popover: NSPopover) -> Bool {
-        return true
     }
 }
 
