@@ -26,14 +26,14 @@ struct Metadata {
 }
 
 struct FileManager {
-    var filetypes: [Dictionary] = [[String: String]]()
+    var filetypes: [Dictionary] = [[String: AnyObject]]()
     var foundFileTypes: [String] = []
     var files: [Metadata] = []
     var successFiles: [Metadata]? = nil
     var failedFiles: [Metadata]? = nil
     
     init (folder: NSURL) {
-        let keys: [String] = [NSURLIsDirectoryKey, NSURLNameKey, NSURLEffectiveIconKey]
+        let keys: [String] = [NSURLIsDirectoryKey, NSURLNameKey, NSURLCustomIconKey, NSURLEffectiveIconKey]
         
         let fileManager = NSFileManager()
         let enumerator = fileManager.enumeratorAtURL(
@@ -52,14 +52,17 @@ struct FileManager {
                     url: url,
                     name: properties[NSURLNameKey] as? String ?? "",
                     filetype: url.pathExtension ?? "(none)",
-                    icon: properties[NSURLEffectiveIconKey] as? NSImage ?? NSImage(),
+                    icon: properties[NSURLCustomIconKey] as? NSImage ?? properties[NSURLEffectiveIconKey] as! NSImage,
                     isDirectory: properties[NSURLIsDirectoryKey]! as! Bool ? true : false
                 )
                 
                 files.append(file)
                 
                 if !foundFileTypes.contains(file.filetype) && !file.isDirectory {
-                    filetypes.append(["name": file.filetype])
+                    filetypes.append([
+                        "name": file.filetype,
+                        "icon": properties[NSURLEffectiveIconKey] as? NSImage ?? NSImage()
+                    ])
                     foundFileTypes.append(file.filetype)
                 }
                 

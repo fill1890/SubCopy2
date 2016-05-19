@@ -223,6 +223,14 @@ extension InitialViewController: NSTableViewDelegate {
         var cellIdentifier: String = ""
         
         let item = self.fileManager!.filetypes[row]
+        
+        guard let name = item["name"] as? String else {
+            return nil
+        }
+        
+        guard let icon = item["icon"] as? NSImage else {
+            return nil
+        }
     
         if tableColumn == tableView.tableColumns[0] {
             text = ""
@@ -231,24 +239,27 @@ extension InitialViewController: NSTableViewDelegate {
                 
                 cell.textField?.stringValue = text
                 
-                cell.checkBox!.identifier = item["name"]!
+                cell.checkBox!.identifier = name
                 cell.checkBox!.target = self
                 cell.checkBox!.action = #selector(updateCheckBox)
                 cell.checkBox!.state = checkState
                 
-                checkBoxStates[item["name"]!] = checkState
+                checkBoxStates[name] = checkState
                 
                 return cell
             }
 
         } else if tableColumn == tableView.tableColumns[1] {
-            text = item["name"]!
+            text = name
             cellIdentifier = "FiletypeCellID"
         }
         
         if let cell = tableView.makeViewWithIdentifier(cellIdentifier, owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
             cell.textField?.backgroundColor = NSColor(red: 1, green: 1, blue: 1, alpha: 1)
+            
+            cell.imageView?.image = icon
+            
             return cell
         }
         

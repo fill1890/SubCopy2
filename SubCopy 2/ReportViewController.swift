@@ -58,6 +58,7 @@ extension reportTableController: NSTableViewDataSource {
         }
         
         cell.textField?.stringValue = self.files[row].name
+        cell.imageView?.image = self.files[row].icon
         
         return cell
     }
